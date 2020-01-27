@@ -16,11 +16,11 @@
     <dependencies>
       <dependency id="Microsoft.AspNetCore.Mvc.Testing" version="2.2.0" />
       <dependency id="Microsoft.AspNetCore.TestHost" version="2.2.0" />
-      <dependency id="NHibernate" version="5.2.6" />
+      <dependency id="NHibernate" version="5.2.7" />
       <dependency id="NUnit" version="3.12.0" />
-      <dependency id="TauCode.Db.Testing" version="1.0.0-dev-2020-01-21-15-53" />
-      <dependency id="TauCode.WebApi.Client" version="1.0.0-dev-2019-12-22-19-16" />
-      <dependency id="TauCode.WebApi.Host" version="1.0.0-dev-2019-12-22-17-21" />
+      <dependency id="TauCode.Db.Testing" version="1.0.0-dev-2020-01-27-11-25" />
+      <dependency id="TauCode.WebApi.Client" version="1.0.0-dev-2020-01-27-12-02" />
+      <dependency id="TauCode.WebApi.Host" version="1.0.0-dev-2020-01-27-12-11" />
     </dependencies>
   </metadata>
   <files>
