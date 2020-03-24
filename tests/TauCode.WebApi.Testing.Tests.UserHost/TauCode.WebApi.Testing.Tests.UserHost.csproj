@@ -5,4 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="TauCode.Mq.EasyNetQ.Cli" Version="1.0.0-dev-2020-03-24-18-09" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TauCode.WebApi.Testing.Tests.Client\TauCode.WebApi.Testing.Tests.Client.csproj" />
+  </ItemGroup>
+
 </Project>

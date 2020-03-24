@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Globalization;
 using TauCode.Mq;
+using TauCode.WebApi.Testing.Tests.AppHost.AppHandlers;
 
 namespace TauCode.WebApi.Testing.Tests.AppHost
 {
@@ -25,6 +26,8 @@ namespace TauCode.WebApi.Testing.Tests.AppHost
             var messageSubscriber = host.Services.GetService<IMessageSubscriber>();
 
             messagePublisher.Start();
+
+            messageSubscriber.Subscribe(typeof(BidMessageHandler));
             messageSubscriber.Start();
 
             host.Run();

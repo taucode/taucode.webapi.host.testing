@@ -12,7 +12,7 @@ using TauCode.Db;
 using TauCode.Db.FluentMigrations;
 using TauCode.Domain.NHibernate.Types;
 using TauCode.Extensions;
-using TauCode.Mq.Autofac;
+using TauCode.Mq.NHibernate;
 using TauCode.WebApi.Server;
 using TauCode.WebApi.Server.Cqrs;
 using TauCode.WebApi.Server.EasyNetQ;
@@ -107,7 +107,7 @@ namespace TauCode.WebApi.Testing.Tests.AppHost
                 {
                     typeof(Startup).Assembly
                 },
-                typeof(AutofacMessageHandlerContextFactory),
+                typeof(NHibernateMessageHandlerContextFactory),
                 "host=localhost");
         }
 

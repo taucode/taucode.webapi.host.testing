@@ -40,7 +40,7 @@ namespace TauCode.WebApi.Testing.Tests.AppHost.Core.Features.Currencies.CreateCu
                     currency.Id,
                     currency.Code,
                     currency.Name,
-                    (new Guid()).ToString(),
+                    (Guid.NewGuid()).ToString(),
                     DateTime.UtcNow));
         }
 

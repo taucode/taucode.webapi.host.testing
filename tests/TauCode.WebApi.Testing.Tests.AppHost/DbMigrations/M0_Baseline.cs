@@ -19,6 +19,18 @@ namespace TauCode.WebApi.Testing.Tests.AppHost.DbMigrations
                 .WithColumn("name")
                     .AsString()
                     .NotNullable();
+
+            this.Create.Table("bid")
+                .WithColumn("id")
+                    .AsGuid()
+                    .NotNullable()
+                    .PrimaryKey("PK_bid")
+                .WithColumn("name")
+                    .AsAnsiString()
+                    .NotNullable()
+                .WithColumn("price")
+                    .AsDecimal()
+                    .NotNullable();
         }
     }
 }
