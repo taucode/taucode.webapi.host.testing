@@ -1,21 +1,29 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
-using TauCode.Cqrs.Commands;
+using TauCode.Cqrs.Mq;
+using TauCode.Domain.Events;
+using TauCode.Mq;
 using TauCode.WebApi.Testing.Tests.AppHost.Core.Exceptions;
 using TauCode.WebApi.Testing.Tests.AppHost.Domain.Currencies;
+using TauCode.WebApi.Testing.Tests.AppHost.Domain.Currencies.DomainEvents;
 
 namespace TauCode.WebApi.Testing.Tests.AppHost.Core.Features.Currencies.CreateCurrency
 {
-    public class CreateCurrencyCommandHandler : ICommandHandler<CreateCurrencyCommand>
+    public class CreateCurrencyCommandHandler : DomainEventAwareCommandHandler<CreateCurrencyCommand>
     {
         private readonly ICurrencyRepository _currencyRepository;
 
-        public CreateCurrencyCommandHandler(ICurrencyRepository currencyRepository)
+        public CreateCurrencyCommandHandler(
+            ICurrencyRepository currencyRepository,
+            IMessagePublisher messagePublisher,
+            IDomainEventConverter domainEventConverter)
+            : base(messagePublisher, domainEventConverter)
         {
             _currencyRepository = currencyRepository;
         }
 
-        public void Execute(CreateCurrencyCommand command)
+        protected override void ExecuteImpl(CreateCurrencyCommand command)
         {
             var existingCurrency = _currencyRepository.GetByCode(command.Code);
             if (existingCurrency != null)
@@ -26,11 +34,21 @@ namespace TauCode.WebApi.Testing.Tests.AppHost.Core.Features.Currencies.CreateCu
             var currency = new Currency(command.Code, command.Name);
             _currencyRepository.Save(currency);
             command.SetResult(currency.Id);
+
+            DomainEventPublisher.Current.Publish(
+                new CurrencyCreatedDomainEvent(
+                    currency.Id,
+                    currency.Code,
+                    currency.Name,
+                    (new Guid()).ToString(),
+                    DateTime.UtcNow));
         }
 
-        public Task ExecuteAsync(CreateCurrencyCommand command, CancellationToken cancellationToken = default)
+        protected override Task ExecuteAsyncImpl(
+            CreateCurrencyCommand command,
+            CancellationToken cancellationToken = default)
         {
-            this.Execute(command);
+            this.ExecuteImpl(command);
             return Task.CompletedTask;
         }
     }
