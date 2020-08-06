@@ -72,7 +72,7 @@ namespace TauCode.WebApi.Testing.Tests
         protected override HttpClient CreateHttpClient()
         {
             var httpClient = _factory
-                .WithWebHostBuilder(builder => builder.UseSolutionRelativeContentRoot(@"tests\TauCode.WebApi.Testing.Tests"))
+                .WithWebHostBuilder(builder => builder.UseSolutionRelativeContentRoot(@"test\TauCode.WebApi.Testing.Tests"))
                 .CreateClient();
 
             var testServer = _factory.Factories.Single().Server;

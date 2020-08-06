@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>TauCode.WebApi.Testing</id>
-    <version>1.0.0.0-dev-2020-03-22-18-14</version>
+    <version>1.0.1-dev-2020-08-06-08-26</version>
     <authors>TauCode</authors>
     <owners>TauCode</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -15,11 +15,11 @@
     <tags>taucode web api testing</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.1">
-        <dependency id="NHibernate" version="5.2.7" />
+        <dependency id="NHibernate" version="5.3.1" />
         <dependency id="NUnit" version="3.12.0" />
-        <dependency id="TauCode.Db.Testing" version="1.0.0-dev-2020-03-21-21-06" />
-        <dependency id="TauCode.WebApi.Client" version="1.0.0-dev-2020-03-22-17-10" />
-        <dependency id="TauCode.WebApi.Server" version="1.0.0-dev-2020-03-21-18-46" />
+        <dependency id="TauCode.Db.Testing" version="1.0.1" />
+        <dependency id="TauCode.WebApi.Client" version="1.0.1" />
+        <dependency id="TauCode.WebApi.Server" version="1.0.1" />
       </group>
     </dependencies>
   </metadata>
