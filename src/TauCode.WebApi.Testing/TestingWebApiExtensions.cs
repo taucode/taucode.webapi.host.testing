@@ -37,6 +37,38 @@ namespace TauCode.WebApi.Testing
             return sb.ToString();
         }
 
+        public static string AddQueryParams(string url, IDictionary<string, string> queryParams)
+        {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+
+            if (queryParams == null)
+            {
+                throw new ArgumentNullException(nameof(queryParams));
+            }
+
+            if (queryParams.Count == 0)
+            {
+                return url; // nothing to add.
+            }
+
+            var queryString = queryParams.BuildQueryString();
+            var sb = new StringBuilder(url);
+            if (!url.Contains("?"))
+            {
+                sb.Append("?");
+            }
+            else
+            {
+                sb.Append("&");
+            }
+
+            sb.Append(queryString);
+            return sb.ToString();
+        }
+
         public static T ReadAs<T>(this HttpResponseMessage message)
         {
             var json = message.Content.ReadAsStringAsync().Result;

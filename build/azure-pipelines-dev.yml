@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- master
+- develop
 
 pool:
   vmImage: 'windows-latest'
@@ -32,3 +32,15 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    packagesToPack: 'nuget\TauCode.WebApi.Testing.nuspec'
+    versioningScheme: 'off'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'custom'
+    arguments: 'push $(Build.ArtifactStagingDirectory)\TauCode.WebApi.Testing.1.0.0-dev-2020-03-22-18-14.nupkg -ApiKey $(NUGET_API_KEY) -Source https://api.nuget.org/v3/index.json'
+

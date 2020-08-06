@@ -20,7 +20,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{A9F170F8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TauCode.WebApi.Testing", "src\TauCode.WebApi.Testing\TauCode.WebApi.Testing.csproj", "{0E3F5845-7168-4DE2-B897-59C9AD257F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TauCode.WebApi.Testing.Tests", "tests\TauCode.WebApi.Testing.Tests\TauCode.WebApi.Testing.Tests.csproj", "{801D3329-7E1A-4B25-B699-1A3A02B30B71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TauCode.WebApi.Testing.Tests", "tests\TauCode.WebApi.Testing.Tests\TauCode.WebApi.Testing.Tests.csproj", "{801D3329-7E1A-4B25-B699-1A3A02B30B71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{0572B25E-7E90-4671-BCE7-A5ED587EDE78}"
+	ProjectSection(SolutionItems) = preProject
+		build\azure-pipelines-dev.yml = build\azure-pipelines-dev.yml
+		build\azure-pipelines.yml = build\azure-pipelines.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TauCode.WebApi.Testing.Tests.AppHost", "tests\TauCode.WebApi.Testing.Tests.AppHost\TauCode.WebApi.Testing.Tests.AppHost.csproj", "{B7F43165-BC60-4265-B79C-5DCEB721D4CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TauCode.WebApi.Testing.Tests.Client", "tests\TauCode.WebApi.Testing.Tests.Client\TauCode.WebApi.Testing.Tests.Client.csproj", "{9BE550E4-DB41-4A96-836D-142782A4E527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TauCode.WebApi.Testing.Tests.UserHost", "tests\TauCode.WebApi.Testing.Tests.UserHost\TauCode.WebApi.Testing.Tests.UserHost.csproj", "{33D624F7-C487-4780-AAEC-7B92FCCE0342}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +48,18 @@ Global
 		{801D3329-7E1A-4B25-B699-1A3A02B30B71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{801D3329-7E1A-4B25-B699-1A3A02B30B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{801D3329-7E1A-4B25-B699-1A3A02B30B71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7F43165-BC60-4265-B79C-5DCEB721D4CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F43165-BC60-4265-B79C-5DCEB721D4CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7F43165-BC60-4265-B79C-5DCEB721D4CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7F43165-BC60-4265-B79C-5DCEB721D4CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE550E4-DB41-4A96-836D-142782A4E527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE550E4-DB41-4A96-836D-142782A4E527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE550E4-DB41-4A96-836D-142782A4E527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE550E4-DB41-4A96-836D-142782A4E527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D624F7-C487-4780-AAEC-7B92FCCE0342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D624F7-C487-4780-AAEC-7B92FCCE0342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D624F7-C487-4780-AAEC-7B92FCCE0342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33D624F7-C487-4780-AAEC-7B92FCCE0342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +67,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0E3F5845-7168-4DE2-B897-59C9AD257F07} = {22A29252-9F9E-4EEA-8718-3BDED9A44044}
 		{801D3329-7E1A-4B25-B699-1A3A02B30B71} = {AFB8254A-4146-4393-AC89-756C1B21E71A}
+		{B7F43165-BC60-4265-B79C-5DCEB721D4CF} = {AFB8254A-4146-4393-AC89-756C1B21E71A}
+		{9BE550E4-DB41-4A96-836D-142782A4E527} = {AFB8254A-4146-4393-AC89-756C1B21E71A}
+		{33D624F7-C487-4780-AAEC-7B92FCCE0342} = {AFB8254A-4146-4393-AC89-756C1B21E71A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6354910-DEC2-433F-8D76-E81510FDFC17}
