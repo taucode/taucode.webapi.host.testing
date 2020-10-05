@@ -10,7 +10,7 @@ namespace TauCode.WebApi.Testing.Tests.AppHost.Domain.Currencies.DomainEvents
             string code,
             string name,
             string correlationId,
-            DateTime occurredAt)
+            DateTimeOffset occurredAt)
         {
             this.Id = id ?? throw new ArgumentNullException(nameof(id));
             this.Code = code ?? throw new ArgumentNullException(nameof(code));
@@ -23,6 +23,6 @@ namespace TauCode.WebApi.Testing.Tests.AppHost.Domain.Currencies.DomainEvents
         public string Code { get; }
         public string Name { get; }
         public string CorrelationId { get; }
-        public DateTime OccurredAt { get; }
+        public DateTimeOffset OccurredAt { get; }
     }
 }
