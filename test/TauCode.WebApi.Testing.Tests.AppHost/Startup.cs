@@ -10,6 +10,7 @@ using System.Data.SQLite;
 using TauCode.Cqrs.NHibernate;
 using TauCode.Db;
 using TauCode.Db.FluentMigrations;
+using TauCode.Db.SQLite;
 using TauCode.Domain.NHibernate.Types;
 using TauCode.Extensions;
 using TauCode.Mq.NHibernate;
@@ -37,6 +38,8 @@ namespace TauCode.WebApi.Testing.Tests.AppHost
         public void ConfigureServices(IServiceCollection services)
         {
             var cqrsAssembly = typeof(Startup).Assembly;
+
+            
             services
                 .AddControllers(options => options.Filters.Add(new ValidationFilterAttribute(cqrsAssembly)))
                 .AddNewtonsoftJson(options => options.UseCamelCasing(false));
@@ -74,7 +77,7 @@ namespace TauCode.WebApi.Testing.Tests.AppHost
 
                 var json = typeof(Startup).Assembly.GetResourceText(".dbdata.json", true);
 
-                var dbSerializer = DbUtils.GetUtilityFactory(DbProviderNames.SQLite).CreateDbSerializer(connection);
+                var dbSerializer = SQLiteUtilityFactory.Instance.CreateSerializer(connection, null);
                 dbSerializer.DeserializeDbData(json);
             }
 

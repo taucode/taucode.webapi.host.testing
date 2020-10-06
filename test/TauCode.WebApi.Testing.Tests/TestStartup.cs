@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using Microsoft.Extensions.Configuration;
 using TauCode.WebApi.Testing.Tests.AppHost;
 
 namespace TauCode.WebApi.Testing.Tests
@@ -12,9 +10,10 @@ namespace TauCode.WebApi.Testing.Tests
         {
         }
 
-        protected override void ConfigureMessaging(ContainerBuilder containerBuilder)
-        {
-            throw new NotImplementedException();
-        }
+        // todo: plug in powerful 'taucode.mq.testing' here!
+        //protected override void ConfigureMessaging(ContainerBuilder containerBuilder)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

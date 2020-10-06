@@ -14,7 +14,7 @@ namespace TauCode.WebApi.Testing.Tests.Client.Messages
             string code,
             string name,
             string correlationId,
-            DateTime createdAt)
+            DateTimeOffset createdAt)
         {
             this.Id = id ?? throw new ArgumentNullException(nameof(id));
             this.Code = code ?? throw new ArgumentNullException(nameof(code));
@@ -26,7 +26,8 @@ namespace TauCode.WebApi.Testing.Tests.Client.Messages
         public IdDto Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public string Topic { get; set; }
         public string CorrelationId { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }
