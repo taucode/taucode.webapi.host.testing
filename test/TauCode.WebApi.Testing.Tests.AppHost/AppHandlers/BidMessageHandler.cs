@@ -1,4 +1,4 @@
-﻿using TauCode.Mq.Abstractions;
+﻿using TauCode.Mq;
 using TauCode.WebApi.Testing.Tests.AppHost.Domain.Bids;
 using TauCode.WebApi.Testing.Tests.Client.Messages;
 

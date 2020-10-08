@@ -3,10 +3,11 @@ using System.Globalization;
 using TauCode.WebApi.Server;
 using TauCode.WebApi.Testing.Tests.AppHost;
 
+// todo clean up
 namespace TauCode.WebApi.Testing.Tests
 {
     [TestFixture]
-    public class AppHostTest : AppHostTestBase
+    public abstract class AppHostTest : AppHostTestBase
     {
         //private TestFactory _factory;
         //private string _connectionString;

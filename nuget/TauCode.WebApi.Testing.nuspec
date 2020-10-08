@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>TauCode.WebApi.Testing</id>
-    <version>1.3.2-dev-2020-10-06-08-12</version>
+    <version>1.3.2-dev-2020-10-08-18-15</version>
     <authors>TauCode</authors>
     <owners>TauCode</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/taucode/taucode.webapi.testing</projectUrl>
     <description>TauCode Web API apps testing support</description>
     <releaseNotes>
-      Migrating to Azure DevOps.
+      Updated refs.
     </releaseNotes>
     <tags>taucode web api testing</tags>
     <dependencies>
@@ -19,7 +19,7 @@
         <dependency id="NUnit" version="3.12.0" />
         <dependency id="TauCode.Db.Testing" version="1.3.2-dev-2020-10-05-23-01" />
         <dependency id="TauCode.WebApi.Client" version="1.3.2-dev-2020-10-05-18-42" />
-        <dependency id="TauCode.WebApi.Server" version="1.3.2-dev-2020-10-05-20-10" />
+        <dependency id="TauCode.WebApi.Server" version="1.3.2-dev-2020-10-08-17-26" />
       </group>
     </dependencies>
   </metadata>

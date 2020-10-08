@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using TauCode.Mq.Abstractions;
+using TauCode.Mq;
 using TauCode.WebApi.Testing.Tests.Client.Messages;
 
 namespace TauCode.WebApi.Testing.Tests.UserHost.Handlers

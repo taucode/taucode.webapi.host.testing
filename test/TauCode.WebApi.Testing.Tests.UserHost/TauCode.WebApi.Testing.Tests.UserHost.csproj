@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TauCode.Mq.EasyNetQ.Cli" Version="1.3.0" />
+    <PackageReference Include="TauCode.Mq" Version="1.3.2-dev-2020-10-08-15-30" />
   </ItemGroup>
 
   <ItemGroup>
