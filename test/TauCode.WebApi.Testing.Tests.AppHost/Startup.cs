@@ -6,20 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Data.SQLite;
-using TauCode.Cqrs.NHibernate;
-using TauCode.Db;
-using TauCode.Db.FluentMigrations;
-using TauCode.Db.SQLite;
-using TauCode.Domain.NHibernate.Types;
-using TauCode.Extensions;
+using System;
 using TauCode.Mq.NHibernate;
 using TauCode.WebApi.Server;
-using TauCode.WebApi.Server.Cqrs;
 using TauCode.WebApi.Server.EasyNetQ;
-using TauCode.WebApi.Server.NHibernate;
 using TauCode.WebApi.Testing.Tests.AppHost.AppDomainEventConverters;
-using TauCode.WebApi.Testing.Tests.AppHost.DbMigrations;
 
 namespace TauCode.WebApi.Testing.Tests.AppHost
 {
@@ -32,7 +23,7 @@ namespace TauCode.WebApi.Testing.Tests.AppHost
 
         public IConfiguration Configuration { get; }
         public ILifetimeScope AutofacContainer { get; private set; }
-        public SQLiteTestConfigurationBuilder SQLiteTestConfigurationBuilder { get; private set; }
+        //public SQLiteTestConfigurationBuilder SQLiteTestConfigurationBuilder { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -61,45 +52,47 @@ namespace TauCode.WebApi.Testing.Tests.AppHost
 
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
-            var cqrsAssembly = typeof(Startup).Assembly;
+            throw new NotImplementedException();
 
-            this.SQLiteTestConfigurationBuilder = new SQLiteTestConfigurationBuilder();
-            var migrator = new FluentDbMigrator(
-                DbProviderNames.SQLite,
-                this.SQLiteTestConfigurationBuilder.ConnectionString, 
-                typeof(M0_Baseline).Assembly);
-            migrator.Migrate();
+            //var cqrsAssembly = typeof(Startup).Assembly;
 
-            using (var connection = new SQLiteConnection(this.SQLiteTestConfigurationBuilder.ConnectionString))
-            {
-                connection.Open();
-                connection.BoostSQLiteInsertions();
+            //this.SQLiteTestConfigurationBuilder = new SQLiteTestConfigurationBuilder();
+            //var migrator = new FluentDbMigrator(
+            //    DbProviderNames.SQLite,
+            //    this.SQLiteTestConfigurationBuilder.ConnectionString, 
+            //    typeof(M0_Baseline).Assembly);
+            //migrator.Migrate();
 
-                var json = typeof(Startup).Assembly.GetResourceText(".dbdata.json", true);
+            //using (var connection = new SQLiteConnection(this.SQLiteTestConfigurationBuilder.ConnectionString))
+            //{
+            //    connection.Open();
+            //    connection.BoostSQLiteInsertions();
 
-                var dbSerializer = SQLiteUtilityFactory.Instance.CreateSerializer(connection, null);
-                dbSerializer.DeserializeDbData(json);
-            }
+            //    var json = typeof(Startup).Assembly.GetResourceText(".dbdata.json", true);
 
-            containerBuilder
-                .AddCqrs(cqrsAssembly, typeof(TransactionalCommandHandlerDecorator<>))
-                .AddNHibernate(
-                    this.SQLiteTestConfigurationBuilder.Configuration,
-                    typeof(Startup).Assembly,
-                    typeof(SQLiteIdUserType<>));
+            //    var dbSerializer = SQLiteUtilityFactory.Instance.CreateSerializer(connection, null);
+            //    dbSerializer.DeserializeDbData(json);
+            //}
 
-            containerBuilder
-                .RegisterAssemblyTypes(typeof(Startup).Assembly)
-                .Where(t => t.FullName.EndsWith("Repository"))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+            //containerBuilder
+            //    .AddCqrs(cqrsAssembly, typeof(TransactionalCommandHandlerDecorator<>))
+            //    .AddNHibernate(
+            //        this.SQLiteTestConfigurationBuilder.Configuration,
+            //        typeof(Startup).Assembly,
+            //        typeof(SQLiteIdUserType<>));
 
-            this.ConfigureMessaging(containerBuilder);
+            //containerBuilder
+            //    .RegisterAssemblyTypes(typeof(Startup).Assembly)
+            //    .Where(t => t.FullName.EndsWith("Repository"))
+            //    .AsImplementedInterfaces()
+            //    .InstancePerLifetimeScope();
 
-            containerBuilder
-                .RegisterInstance(this)
-                .As<IAutofacStartup>()
-                .SingleInstance();
+            //this.ConfigureMessaging(containerBuilder);
+
+            //containerBuilder
+            //    .RegisterInstance(this)
+            //    .As<IAutofacStartup>()
+            //    .SingleInstance();
         }
 
         protected virtual void ConfigureMessaging(ContainerBuilder containerBuilder)

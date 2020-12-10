@@ -3,7 +3,6 @@ using NHibernate;
 using System.Globalization;
 using System.Net.Http;
 using TauCode.Db;
-using TauCode.Db.SQLite;
 using TauCode.Db.Testing;
 using TauCode.WebApi.Server;
 
@@ -91,6 +90,6 @@ namespace TauCode.WebApi.Testing
             this.AssertLifetimeScope.Dispose();
         }
 
-        protected override IDbUtilityFactory GetDbUtilityFactory() => SQLiteUtilityFactory.Instance;
+        //protected override IDbUtilityFactory GetDbUtilityFactory() => SQLiteUtilityFactory.Instance; // todo: nope. make this abstract.
     }
 }

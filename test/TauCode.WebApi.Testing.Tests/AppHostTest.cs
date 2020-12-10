@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Globalization;
-using TauCode.WebApi.Server;
-using TauCode.WebApi.Testing.Tests.AppHost;
+using TauCode.Db;
 
 // todo clean up
 namespace TauCode.WebApi.Testing.Tests
@@ -64,7 +64,8 @@ namespace TauCode.WebApi.Testing.Tests
         //protected override string GetDbProviderName() => DbProviderNames.SQLite;
 
         protected override string GetConnectionString() =>
-            ((Startup)this.TestFactory.GetService<IAutofacStartup>()).SQLiteTestConfigurationBuilder.ConnectionString;
+            //((Startup)this.TestFactory.GetService<IAutofacStartup>()).SQLiteTestConfigurationBuilder.ConnectionString;
+            throw new NotImplementedException();
 
         //protected override HttpClient CreateHttpClient()
         //{
@@ -90,5 +91,10 @@ namespace TauCode.WebApi.Testing.Tests
         //    _factory.Dispose();
         //    _factory = null;
         //}
+
+        protected override IDbUtilityFactory GetDbUtilityFactory()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
