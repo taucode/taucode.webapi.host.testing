@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Data;
 using System.Linq;
 using System.Net;
 using TauCode.WebApi.Testing.Tests.AppHost.Core.Features.Currencies.GetAllCurrencies;
@@ -38,6 +39,11 @@ namespace TauCode.WebApi.Testing.Tests.ControllerTests
             Assert.That(currency.Id, Is.EqualTo(new CurrencyId("47b46c6d-b981-4994-8867-d92331897273")));
             Assert.That(currency.Code, Is.EqualTo("KPW"));
             Assert.That(currency.Name, Is.EqualTo("North Korean won"));
+        }
+
+        protected override void TuneConnection(IDbConnection connection)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

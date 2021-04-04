@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.Data;
 using System.Net;
 using System.Text;
 using TauCode.WebApi.Testing.Tests.AppHost.Core.Features.Currencies.GetCurrency;
@@ -82,6 +83,11 @@ namespace TauCode.WebApi.Testing.Tests.ControllerTests
             var error = response.ReadAsError();
             Assert.That(error.Code, Is.EqualTo(typeof(CurrencyNotFoundException).FullName));
             Assert.That(error.Message, Is.EqualTo("Currency not found."));
+        }
+
+        protected override void TuneConnection(IDbConnection connection)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

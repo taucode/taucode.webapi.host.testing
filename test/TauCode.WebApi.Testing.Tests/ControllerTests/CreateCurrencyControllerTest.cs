@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Data;
+using NUnit.Framework;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -88,6 +89,11 @@ namespace TauCode.WebApi.Testing.Tests.ControllerTests
             };
 
             return command;
+        }
+
+        protected override void TuneConnection(IDbConnection connection)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -2,7 +2,6 @@
 using NHibernate;
 using System.Globalization;
 using System.Net.Http;
-using TauCode.Db;
 using TauCode.Db.Testing;
 using TauCode.WebApi.Server;
 

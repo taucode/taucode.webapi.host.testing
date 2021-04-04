@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using TauCode.Domain.Identities;
 using TauCode.WebApi.Client.Exceptions;
 
 namespace TauCode.WebApi.Testing
@@ -96,26 +95,26 @@ namespace TauCode.WebApi.Testing
             }
         }
 
-        public static IdDto ToIdDto(this string s)
-        {
-            if (s == null)
-            {
-                return null;
-            }
+        //public static IdDto ToIdDto(this string s)
+        //{
+        //    if (s == null)
+        //    {
+        //        return null;
+        //    }
 
-            return new IdDto(s);
-        }
+        //    return new IdDto(s);
+        //}
 
-        public static IdDto ToIdDto(this IdBase id)
-        {
-            return new IdDto(id.Id);
-        }
+        //public static IdDto ToIdDto(this IdBase id)
+        //{
+        //    return new IdDto(id.Id);
+        //}
 
-        public static TId ToId<TId>(this IdDto id) where TId : IdBase
-        {
-            var ctor = typeof(TId).GetConstructor(new[] { typeof(Guid) });
-            return (TId)ctor.Invoke(new object[] { id.GetId() });
-        }
+        //public static TId ToId<TId>(this IdDto id) where TId : IdBase
+        //{
+        //    var ctor = typeof(TId).GetConstructor(new[] { typeof(Guid) });
+        //    return (TId)ctor.Invoke(new object[] { id.GetId() });
+        //}
 
         public static ValidationErrorServiceClientException ShouldHaveFailureNumber(
             this ValidationErrorServiceClientException ex,
