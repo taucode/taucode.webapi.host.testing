@@ -5,13 +5,10 @@ using System.Net.Http;
 using TauCode.Db.Testing;
 using TauCode.WebApi.Server;
 
-// todo clean up
 namespace TauCode.WebApi.Testing
 {
     public abstract class AppHostTestBase : DbTestBase
     {
-        //protected TestFactory Factory { get; private set; }
-
         protected abstract ITestFactory CreateTestFactory();
 
         protected ITestFactory TestFactory { get; private set; }
@@ -34,14 +31,6 @@ namespace TauCode.WebApi.Testing
             this.TestFactory = this.CreateTestFactory();
             this.HttpClient = this.TestFactory.CreateClient();
 
-            //this.HttpClient = this.Factory
-            //    .WithWebHostBuilder(builder => builder.UseSolutionRelativeContentRoot(@"test\TauCode.WebApi.Server.Cqrs.Tests"))
-            //    .CreateClient();
-
-            //var testServer = this.Factory.Factories.Single().Server;
-
-            //var startup = (Startup)testServer.Services.GetService<IAutofacStartup>();
-
             var startup = this.TestFactory.GetService<IAutofacStartup>();
 
             this.Container = startup.AutofacContainer;
@@ -54,11 +43,9 @@ namespace TauCode.WebApi.Testing
             base.OneTimeTearDownImpl();
 
             this.HttpClient.Dispose();
-            //this.Factory.Dispose();
             this.TestFactory.Dispose();
 
             this.HttpClient = null;
-            //this.Factory = null;
             this.TestFactory = null;
         }
 
@@ -88,7 +75,5 @@ namespace TauCode.WebApi.Testing
             this.TestLifetimeScope.Dispose();
             this.AssertLifetimeScope.Dispose();
         }
-
-        //protected override IDbUtilityFactory GetDbUtilityFactory() => SQLiteUtilityFactory.Instance; // todo: nope. make this abstract.
     }
 }

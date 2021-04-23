@@ -2,24 +2,27 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>TauCode.WebApi.Testing</id>
-    <version>1.3.2.7-dev-2021-04-04-12-18</version>
+    <version>1.3.2.7-dev-2021-04-23-09-29</version>
     <authors>TauCode</authors>
     <owners>TauCode</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/taucode/taucode.webapi.testing</projectUrl>
-    <description>TauCode Web API apps testing support</description>
+    <repository type="git" url="https://github.com/taucode/taucode.webapi.testing"/>
+    <description>
+      TauCode Web API apps testing support
+    </description>
     <releaseNotes>
       Resurrection.
     </releaseNotes>
     <tags>taucode web api testing</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.1">
-        <dependency id="NHibernate" version="5.3.7" />
+        <dependency id="NHibernate" version="5.3.8" />
         <dependency id="NUnit" version="3.13.1" />
-        <dependency id="TauCode.Db.Testing" version="1.3.2.7-dev-2021-04-04-12-18" />
-        <dependency id="TauCode.WebApi.Client" version="1.3.2.7-dev-2021-03-12-15-13" />
-        <dependency id="TauCode.WebApi.Server" version="1.3.2.7-dev-2021-04-04-12-18" />
+        <dependency id="TauCode.Db.Testing" version="1.3.2.7-dev-2021-04-23-09-29" />
+        <dependency id="TauCode.WebApi.Client" version="1.3.2.7-dev-2021-04-22-09-25" />
+        <dependency id="TauCode.WebApi.Server" version="1.3.2.7-dev-2021-04-22-21-47" />
       </group>
     </dependencies>
   </metadata>
