@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using TauCode.Domain.Identities;
+using System.Threading;
+using System.Threading.Tasks;
 using TauCode.WebApi.Client.Exceptions;
 
 namespace TauCode.WebApi.Testing
@@ -76,9 +77,25 @@ namespace TauCode.WebApi.Testing
             return result;
         }
 
+        public static async Task<T> ReadAsAsync<T>(
+            this HttpResponseMessage message,
+            CancellationToken cancellationToken = default)
+        {
+            var json = await message.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<T>(json);
+            return result;
+        }
+
         public static ErrorDto ReadAsError(this HttpResponseMessage message)
         {
             return message.ReadAs<ErrorDto>();
+        }
+
+        public static async Task<ErrorDto> ReadAsErrorAsync(
+            this HttpResponseMessage message,
+            CancellationToken cancellationToken = default)
+        {
+            return await message.ReadAsAsync<ErrorDto>(cancellationToken);
         }
 
         public static ValidationErrorDto ReadAsValidationError(this HttpResponseMessage message)
@@ -86,35 +103,30 @@ namespace TauCode.WebApi.Testing
             return message.ReadAs<ValidationErrorDto>();
         }
 
+        public static async Task<ValidationErrorDto> ReadAsValidationErrorAsync(
+            this HttpResponseMessage message,
+            CancellationToken cancellationToken = default)
+        {
+            return await message.ReadAsAsync<ValidationErrorDto>(cancellationToken);
+        }
+
         public static void DoInTransaction(this ISession session, Action action)
         {
-            using (var tran = session.BeginTransaction())
-            {
-                action();
-
-                tran.Commit();
-            }
+            using var tran = session.BeginTransaction();
+            action();
+            tran.Commit();
         }
 
-        public static IdDto ToIdDto(this string s)
+        public static async Task DoInTransactionAsync(
+            this ISession session,
+            Func<Task> action,
+            CancellationToken cancellationToken = default)
         {
-            if (s == null)
-            {
-                return null;
-            }
+            using var transaction = session.BeginTransaction();
 
-            return new IdDto(s);
-        }
+            await action();
 
-        public static IdDto ToIdDto(this IdBase id)
-        {
-            return new IdDto(id.Id);
-        }
-
-        public static TId ToId<TId>(this IdDto id) where TId : IdBase
-        {
-            var ctor = typeof(TId).GetConstructor(new[] { typeof(Guid) });
-            return (TId)ctor.Invoke(new object[] { id.GetId() });
+            await transaction.CommitAsync(cancellationToken);
         }
 
         public static ValidationErrorServiceClientException ShouldHaveFailureNumber(

@@ -1,74 +1,40 @@
 ﻿using Autofac;
 using NHibernate;
+using System.Globalization;
 using System.Net.Http;
 using TauCode.Db.Testing;
+using TauCode.WebApi.Server;
 
-// todo clean up
 namespace TauCode.WebApi.Testing
 {
     public abstract class AppHostTestBase : DbTestBase
     {
-        protected HttpClient HttpClient { get; set; }
+        protected abstract ITestFactory CreateTestFactory();
 
-        protected ILifetimeScope Container { get; set; }
-        protected ILifetimeScope SetupLifetimeScope { get; set; }
-        protected ILifetimeScope TestLifetimeScope { get; set; }
-        protected ILifetimeScope AssertLifetimeScope { get; set; }
+        protected ITestFactory TestFactory { get; private set; }
+
+        protected HttpClient HttpClient { get; private set; }
+        protected ILifetimeScope Container { get; private set; }
+
+        protected ILifetimeScope SetupLifetimeScope { get; private set; }
+        protected ILifetimeScope TestLifetimeScope { get; private set; }
+        protected ILifetimeScope AssertLifetimeScope { get; private set; }
 
         protected ISession SetupSession { get; set; }
         protected ISession TestSession { get; set; }
         protected ISession AssertSession { get; set; }
 
-        //protected abstract string GetSolutionRelativeContentRoot();
-
-        //protected virtual TFactory CreateFactory()
-        //{
-        //    var type = typeof(TFactory);
-        //    var ctor = type.GetConstructor(Type.EmptyTypes);
-        //    if (ctor == null)
-        //    {
-        //        throw new WebApiTestingException(
-        //            $"Type '{typeof(TFactory).FullName}' doesn't have a default constructor.");
-        //    }
-
-        //    var factory = (TFactory)ctor.Invoke(new object[] { });
-        //    return factory;
-        //}
-
-        protected abstract HttpClient CreateHttpClient();
-
-        protected abstract ILifetimeScope GetContainer();
-
-        protected abstract void DisposeFactory();
-
-        //protected virtual HttpClient CreateHttpClient()
-        //{
-        //    return this.Factory
-        //        .WithWebHostBuilder(builder => builder.UseSolutionRelativeContentRoot(this.GetSolutionRelativeContentRoot()))
-        //        .CreateClient();
-        //}
-
-        //protected virtual TestServer GetTestServer()
-        //{
-        //    return this.Factory.Factories.Single().Server;
-        //}
-
-        //protected virtual IContainer GetContainer()
-        //{
-        //    //var testServer = this.GetTestServer();
-        //    var appStartup = (IAppStartup)testServer.Host.Services.GetService(typeof(IAppStartup));
-        //    var container = appStartup.GetContainer();
-        //    return container;
-        //}
-
         protected override void OneTimeSetUpImpl()
         {
-            //this.Factory = this.CreateFactory();
-            this.HttpClient = this.CreateHttpClient();
-            this.Container = this.GetContainer();
+            Inflector.Inflector.SetDefaultCultureFunc = () => new CultureInfo("en-US");
 
-            // Yes, exactly. first, we setup IoC/Web API things, and then - DB stuff from the super-class.
-            // Because GetConnectionString might want to use TestStartup's connection string, and TestStartup is injected via IoC.
+            this.TestFactory = this.CreateTestFactory();
+            this.HttpClient = this.TestFactory.CreateClient();
+
+            var startup = this.TestFactory.GetService<IAutofacStartup>();
+
+            this.Container = startup.AutofacContainer;
+
             base.OneTimeSetUpImpl();
         }
 
@@ -77,17 +43,16 @@ namespace TauCode.WebApi.Testing
             base.OneTimeTearDownImpl();
 
             this.HttpClient.Dispose();
-            //this.Factory.Dispose();
+            this.TestFactory.Dispose();
 
             this.HttpClient = null;
-            //this.Factory = null;
-
-            this.DisposeFactory();
+            this.TestFactory = null;
         }
 
         protected override void SetUpImpl()
         {
-            // autofac stuff
+            base.SetUpImpl();
+
             this.SetupLifetimeScope = this.Container.BeginLifetimeScope();
             this.TestLifetimeScope = this.Container.BeginLifetimeScope();
             this.AssertLifetimeScope = this.Container.BeginLifetimeScope();
@@ -100,6 +65,8 @@ namespace TauCode.WebApi.Testing
 
         protected override void TearDownImpl()
         {
+            base.TearDownImpl();
+
             this.SetupSession.Dispose();
             this.TestSession.Dispose();
             this.AssertSession.Dispose();
