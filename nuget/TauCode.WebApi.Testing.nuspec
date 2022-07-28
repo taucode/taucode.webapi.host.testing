@@ -2,32 +2,32 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>TauCode.WebApi.Testing</id>
-    <version>1.3.2.7-dev-2021-04-23-09-29</version>
+    <version>1.3.7-alpha.1.2022-07-28.09-02</version>
     <authors>TauCode</authors>
     <owners>TauCode</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="file">LICENSE.txt</license>
+    <license type="file">LICENSE</license>
     <projectUrl>https://github.com/taucode/taucode.webapi.testing</projectUrl>
     <repository type="git" url="https://github.com/taucode/taucode.webapi.testing"/>
     <description>
       TauCode Web API apps testing support
     </description>
     <releaseNotes>
-      Resurrection.
+      Developing release 1.3.7.
     </releaseNotes>
-    <tags>taucode web api testing</tags>
+    <tags>taucode web api unit integration testing</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.1">
-        <dependency id="NHibernate" version="5.3.8" />
-        <dependency id="NUnit" version="3.13.1" />
-        <dependency id="TauCode.Db.Testing" version="1.3.2.7-dev-2021-04-23-09-29" />
-        <dependency id="TauCode.WebApi.Client" version="1.3.2.7-dev-2021-04-22-09-25" />
-        <dependency id="TauCode.WebApi.Server" version="1.3.2.7-dev-2021-04-22-21-47" />
+        <dependency id="NHibernate" version="5.3.12" />
+        <dependency id="NUnit" version="3.13.3" />
+        <dependency id="TauCode.Db.Testing" version="1.3.7" />
+        <dependency id="TauCode.WebApi.Client" version="1.3.7" />
+        <dependency id="TauCode.WebApi.Server" version="1.3.7" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\LICENSE.txt" target="" />
+    <file src="..\LICENSE*" target="" />
     <file src="..\src\TauCode.WebApi.Testing\bin\Release\netstandard2.1\TauCode.WebApi.Testing.dll" target="lib\netstandard2.1" />
     <file src="..\src\TauCode.WebApi.Testing\bin\Release\netstandard2.1\TauCode.WebApi.Testing.pdb" target="lib\netstandard2.1" />
   </files>
