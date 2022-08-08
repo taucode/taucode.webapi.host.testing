@@ -1,19 +1,18 @@
 ﻿using NUnit.Framework;
 
-namespace TauCode.WebApi.Testing.Tests
+namespace TauCode.WebApi.Testing.Tests;
+
+[TestFixture]
+public class WebApiTestingDummyFixture
 {
-    [TestFixture]
-    public class WebApiTestingDummyFixture
+    [Test]
+    public void WebApiTestingDummyTest()
     {
-        [Test]
-        public void WebApiTestingDummyTest()
-        {
-            // Arrange
+        // Arrange
 
-            // Act
+        // Act
 
-            // Assert
-            Assert.Pass("Added for CI/CD.");
-        }
+        // Assert
+        Assert.Pass("Added for CI/CD.");
     }
 }

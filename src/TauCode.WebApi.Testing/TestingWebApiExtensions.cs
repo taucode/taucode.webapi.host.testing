@@ -1,176 +1,170 @@
 ﻿using Newtonsoft.Json;
 using NHibernate;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using TauCode.WebApi.Client.Exceptions;
 
-namespace TauCode.WebApi.Testing
+namespace TauCode.WebApi.Testing;
+
+public static class TestingWebApiExtensions
 {
-    public static class TestingWebApiExtensions
+    public static string BuildQueryString(this IDictionary<string, string> parameterDictionary)
     {
-        public static string BuildQueryString(this IDictionary<string, string> parameterDictionary)
+        var sb = new StringBuilder();
+        var added = false;
+
+        foreach (var pair in parameterDictionary)
         {
-            var sb = new StringBuilder();
-            var added = false;
-
-            foreach (var pair in parameterDictionary)
+            if (pair.Value == null)
             {
-                if (pair.Value == null)
-                {
-                    continue;
-                }
-
-                if (added)
-                {
-                    sb.Append("&");
-                }
-
-                added = true;
-
-                sb.Append($"{pair.Key}={pair.Value}");
+                continue;
             }
 
-            return sb.ToString();
-        }
-
-        public static string AddQueryParams(string url, IDictionary<string, string> queryParams)
-        {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            if (queryParams == null)
-            {
-                throw new ArgumentNullException(nameof(queryParams));
-            }
-
-            if (queryParams.Count == 0)
-            {
-                return url; // nothing to add.
-            }
-
-            var queryString = queryParams.BuildQueryString();
-            var sb = new StringBuilder(url);
-            if (!url.Contains("?"))
-            {
-                sb.Append("?");
-            }
-            else
+            if (added)
             {
                 sb.Append("&");
             }
 
-            sb.Append(queryString);
-            return sb.ToString();
+            added = true;
+
+            sb.Append($"{pair.Key}={pair.Value}");
         }
 
-        public static T ReadAs<T>(this HttpResponseMessage message)
+        return sb.ToString();
+    }
+
+    public static string AddQueryParams(string url, IDictionary<string, string> queryParams)
+    {
+        if (url == null)
         {
-            var json = message.Content.ReadAsStringAsync().Result;
-            var result = JsonConvert.DeserializeObject<T>(json);
-            return result;
+            throw new ArgumentNullException(nameof(url));
         }
 
-        public static async Task<T> ReadAsAsync<T>(
-            this HttpResponseMessage message,
-            CancellationToken cancellationToken = default)
+        if (queryParams == null)
         {
-            var json = await message.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(json);
-            return result;
+            throw new ArgumentNullException(nameof(queryParams));
         }
 
-        public static ErrorDto ReadAsError(this HttpResponseMessage message)
+        if (queryParams.Count == 0)
         {
-            return message.ReadAs<ErrorDto>();
+            return url; // nothing to add.
         }
 
-        public static async Task<ErrorDto> ReadAsErrorAsync(
-            this HttpResponseMessage message,
-            CancellationToken cancellationToken = default)
+        var queryString = queryParams.BuildQueryString();
+        var sb = new StringBuilder(url);
+        if (!url.Contains("?"))
         {
-            return await message.ReadAsAsync<ErrorDto>(cancellationToken);
+            sb.Append("?");
         }
-
-        public static ValidationErrorDto ReadAsValidationError(this HttpResponseMessage message)
+        else
         {
-            return message.ReadAs<ValidationErrorDto>();
+            sb.Append("&");
         }
 
-        public static async Task<ValidationErrorDto> ReadAsValidationErrorAsync(
-            this HttpResponseMessage message,
-            CancellationToken cancellationToken = default)
-        {
-            return await message.ReadAsAsync<ValidationErrorDto>(cancellationToken);
-        }
+        sb.Append(queryString);
+        return sb.ToString();
+    }
 
-        public static void DoInTransaction(this ISession session, Action action)
-        {
-            using var tran = session.BeginTransaction();
-            action();
-            tran.Commit();
-        }
+    public static T ReadAs<T>(this HttpResponseMessage message)
+    {
+        var json = message.Content.ReadAsStringAsync().Result;
+        var result = JsonConvert.DeserializeObject<T>(json);
+        return result;
+    }
 
-        public static async Task DoInTransactionAsync(
-            this ISession session,
-            Func<Task> action,
-            CancellationToken cancellationToken = default)
-        {
-            using var transaction = session.BeginTransaction();
+    public static async Task<T> ReadAsAsync<T>(
+        this HttpResponseMessage message,
+        CancellationToken cancellationToken = default)
+    {
+        var json = await message.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<T>(json);
+        return result;
+    }
 
-            await action();
+    public static ErrorDto ReadAsError(this HttpResponseMessage message)
+    {
+        return message.ReadAs<ErrorDto>();
+    }
 
-            await transaction.CommitAsync(cancellationToken);
-        }
+    public static async Task<ErrorDto> ReadAsErrorAsync(
+        this HttpResponseMessage message,
+        CancellationToken cancellationToken = default)
+    {
+        return await message.ReadAsAsync<ErrorDto>(cancellationToken);
+    }
 
-        public static ValidationErrorServiceClientException ShouldHaveFailureNumber(
-            this ValidationErrorServiceClientException ex,
-            int expectedFailureNumber)
-        {
-            Assert.That(ex.Failures, Has.Count.EqualTo(expectedFailureNumber));
-            return ex;
-        }
+    public static ValidationErrorDto ReadAsValidationError(this HttpResponseMessage message)
+    {
+        return message.ReadAs<ValidationErrorDto>();
+    }
 
-        public static ValidationErrorServiceClientException ShouldContainFailure(
-            this ValidationErrorServiceClientException ex,
-            string expectedKey,
-            string expectedCode,
-            string expectedMessage)
-        {
-            Assert.That(ex.Failures, Does.ContainKey(expectedKey));
-            var failure = ex.Failures[expectedKey];
-            Assert.That(failure.Code, Is.EqualTo(expectedCode));
-            Assert.That(failure.Message, Is.EqualTo(expectedMessage));
+    public static async Task<ValidationErrorDto> ReadAsValidationErrorAsync(
+        this HttpResponseMessage message,
+        CancellationToken cancellationToken = default)
+    {
+        return await message.ReadAsAsync<ValidationErrorDto>(cancellationToken);
+    }
 
-            return ex;
-        }
+    public static void DoInTransaction(this ISession session, Action action)
+    {
+        using var tran = session.BeginTransaction();
+        action();
+        tran.Commit();
+    }
 
-        public static ValidationErrorDto ShouldHaveFailureNumber(
-            this ValidationErrorDto validationError,
-            int expectedFailureNumber)
-        {
-            Assert.That(validationError.Failures, Has.Count.EqualTo(expectedFailureNumber));
-            return validationError;
-        }
+    public static async Task DoInTransactionAsync(
+        this ISession session,
+        Func<Task> action,
+        CancellationToken cancellationToken = default)
+    {
+        using var transaction = session.BeginTransaction();
 
-        public static ValidationErrorDto ShouldContainFailure(
-            this ValidationErrorDto validationError,
-            string expectedKey,
-            string expectedCode,
-            string expectedMessage)
-        {
-            Assert.That(validationError.Failures, Does.ContainKey(expectedKey));
-            var failure = validationError.Failures[expectedKey];
-            Assert.That(failure.Code, Is.EqualTo(expectedCode));
-            Assert.That(failure.Message, Is.EqualTo(expectedMessage));
+        await action();
 
-            return validationError;
-        }
+        await transaction.CommitAsync(cancellationToken);
+    }
+
+    public static ValidationErrorServiceClientException ShouldHaveFailureNumber(
+        this ValidationErrorServiceClientException ex,
+        int expectedFailureNumber)
+    {
+        Assert.That(ex.Failures, Has.Count.EqualTo(expectedFailureNumber));
+        return ex;
+    }
+
+    public static ValidationErrorServiceClientException ShouldContainFailure(
+        this ValidationErrorServiceClientException ex,
+        string expectedKey,
+        string expectedCode,
+        string expectedMessage)
+    {
+        Assert.That(ex.Failures, Does.ContainKey(expectedKey));
+        var failure = ex.Failures[expectedKey];
+        Assert.That(failure.Code, Is.EqualTo(expectedCode));
+        Assert.That(failure.Message, Is.EqualTo(expectedMessage));
+
+        return ex;
+    }
+
+    public static ValidationErrorDto ShouldHaveFailureNumber(
+        this ValidationErrorDto validationError,
+        int expectedFailureNumber)
+    {
+        Assert.That(validationError.Failures, Has.Count.EqualTo(expectedFailureNumber));
+        return validationError;
+    }
+
+    public static ValidationErrorDto ShouldContainFailure(
+        this ValidationErrorDto validationError,
+        string expectedKey,
+        string expectedCode,
+        string expectedMessage)
+    {
+        Assert.That(validationError.Failures, Does.ContainKey(expectedKey));
+        var failure = validationError.Failures[expectedKey];
+        Assert.That(failure.Code, Is.EqualTo(expectedCode));
+        Assert.That(failure.Message, Is.EqualTo(expectedMessage));
+
+        return validationError;
     }
 }
