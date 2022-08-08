@@ -1,11 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿namespace TauCode.WebApi.Testing;
 
-namespace TauCode.WebApi.Testing
+public interface ITestFactory : IDisposable
 {
-    public interface ITestFactory : IDisposable
-    {
-        HttpClient CreateClient();
-        TService GetService<TService>();
-    }
+    HttpClient CreateClient();
+    TService GetService<TService>();
 }
