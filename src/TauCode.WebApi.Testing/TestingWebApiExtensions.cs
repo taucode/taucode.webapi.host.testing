@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using NHibernate;
 using NUnit.Framework;
 using System.Text;
 using TauCode.WebApi.Client.Exceptions;
@@ -76,7 +75,7 @@ public static class TestingWebApiExtensions
         this HttpResponseMessage message,
         CancellationToken cancellationToken = default)
     {
-        var json = await message.Content.ReadAsStringAsync();
+        var json = await message.Content.ReadAsStringAsync(cancellationToken);
         var result = JsonConvert.DeserializeObject<T>(json);
         return result;
     }
@@ -105,24 +104,26 @@ public static class TestingWebApiExtensions
         return await message.ReadAsAsync<ValidationErrorDto>(cancellationToken);
     }
 
-    public static void DoInTransaction(this ISession session, Action action)
-    {
-        using var tran = session.BeginTransaction();
-        action();
-        tran.Commit();
-    }
+    // todo deal with this
+    //public static void DoInTransaction(this ISession session, Action action)
+    //{
+    //    using var tran = session.BeginTransaction();
+    //    action();
+    //    tran.Commit();
+    //}
 
-    public static async Task DoInTransactionAsync(
-        this ISession session,
-        Func<Task> action,
-        CancellationToken cancellationToken = default)
-    {
-        using var transaction = session.BeginTransaction();
+    // todo deal with this
+    //public static async Task DoInTransactionAsync(
+    //    this ISession session,
+    //    Func<Task> action,
+    //    CancellationToken cancellationToken = default)
+    //{
+    //    using var transaction = session.BeginTransaction();
 
-        await action();
+    //    await action();
 
-        await transaction.CommitAsync(cancellationToken);
-    }
+    //    await transaction.CommitAsync(cancellationToken);
+    //}
 
     public static ValidationErrorServiceClientException ShouldHaveFailureNumber(
         this ValidationErrorServiceClientException ex,

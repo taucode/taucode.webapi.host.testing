@@ -3,10 +3,10 @@
 namespace TauCode.WebApi.Testing.Tests;
 
 [TestFixture]
-public class WebApiTestingDummyFixture
+public class DummyFixture
 {
     [Test]
-    public void WebApiTestingDummyTest()
+    public void DummyTest()
     {
         // Arrange
 
