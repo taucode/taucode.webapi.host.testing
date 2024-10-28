@@ -2,32 +2,31 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>TauCode.WebApi.Testing</id>
-    <version>1.7.0</version>
+    <version>2.0.1</version>
     <authors>TauCode</authors>
     <owners>TauCode</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE</license>
-    <projectUrl>https://github.com/taucode/taucode.webapi.testing</projectUrl>
-    <repository type="git" url="https://github.com/taucode/taucode.webapi.testing"/>
+    <projectUrl>https://github.com/taucode/webapi.testing</projectUrl>
+    <repository type="git" url="https://github.com/taucode/webapi.testing"/>
+    <readme>README.md</readme>
     <description>
       TauCode Web API apps testing support
     </description>
     <releaseNotes>
-      Release 1.7.0.
+      Release 2.0.1.
     </releaseNotes>
     <tags>taucode web api unit integration testing</tags>
     <dependencies>
-      <group targetFramework=".NETCoreApp6.0">
-        <dependency id="NHibernate" version="5.4.0" />
-        <dependency id="NUnit" version="3.13.3" />
-        <dependency id="TauCode.Db.Testing" version="1.7.0" />
-        <dependency id="TauCode.WebApi.Client" version="1.7.0" />
-        <dependency id="TauCode.WebApi.Server" version="1.7.0" />
+      <group targetFramework="net8.0">
+        <dependency id="NUnit" version="4.2.2" />
+        <dependency id="TauCode.WebApi.Client" version="2.0.1" />
       </group>
     </dependencies>
   </metadata>
   <files>
+    <file src="..\README.md" target="" />
     <file src="..\LICENSE*" target="" />
-    <file src="..\src\TauCode.WebApi.Testing\bin\Release\net6.0\TauCode.WebApi.Testing.dll" target="lib\net6.0" />
+    <file src="..\src\TauCode.WebApi.Testing\bin\Release\net8.0\TauCode.WebApi.Testing.dll" target="lib\net8.0" />
   </files>
 </package>
